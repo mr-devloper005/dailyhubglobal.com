@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Bookmark, Building2, Compass, FileText, Globe2, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bookmark, Building2, Compass, FileText, Globe2, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
@@ -106,19 +106,6 @@ function getDirectoryTone(brandPack: string) {
     badge: 'bg-slate-950 text-white',
     action: 'bg-slate-950 text-white hover:bg-slate-800',
     actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-100',
-  }
-}
-
-function getEditorialTone() {
-  return {
-    shell: 'bg-[#fbf6ee] text-[#241711]',
-    panel: 'border border-[#dcc8b7] bg-[#fffdfa] shadow-[0_24px_60px_rgba(77,47,27,0.08)]',
-    soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-    muted: 'text-[#6e5547]',
-    title: 'text-[#241711]',
-    badge: 'bg-[#241711] text-[#fff1e2]',
-    action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
-    actionAlt: 'border border-[#dcc8b7] bg-transparent text-[#241711] hover:bg-[#f5e7d7]',
   }
 }
 
@@ -310,7 +297,6 @@ function EditorialHome({
   posts: SitePost[]
   supportTasks: EnabledTask[]
 }) {
-  const tone = getEditorialTone()
   const defaultEditorialTask: TaskKey =
     primaryTask?.key === 'mediaDistribution' || primaryTask?.key === 'article'
       ? primaryTask.key
@@ -322,135 +308,209 @@ function EditorialHome({
   const lead = posts[0]
   const spotlightPosts = posts.slice(1, 4)
   const deckPosts = posts.slice(10, 16)
-  const featuredSecondary = posts[1]
 
-  const headline = lead?.title || SITE_CONFIG.name
+  const headline = lead?.title || 'Global media distribution'
   const summarySource = lead?.summary || SITE_CONFIG.description
   const [bodyA, bodyB] = splitIntoTwoParagraphs(summarySource)
-  const secondParagraph = bodyB || SITE_CONFIG.tagline
+  const leadTeaser = bodyA || SITE_CONFIG.tagline
 
   return (
-    <main className="bg-[#fafafa] text-[#1a1a1a]">
-      <div className="mx-auto min-h-screen max-w-[1400px] border-x border-[#0f172a]/8 bg-white shadow-[0_0_0_1px_rgba(15,23,42,0.04)]">
-        <section className="px-5 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10 lg:items-start">
-            {/* Left: lead story — headings + highlighted body */}
-            <div className="order-1 max-w-xl lg:pt-2">
-              <p className="font-display text-[2.15rem] font-medium leading-[1.05] tracking-[-0.04em] sm:text-5xl">
-                {SITE_CONFIG.name}
+    <main className="bg-[#e6dacf] text-[#1a1a1a]">
+      <div className="mx-auto min-h-screen max-w-[1400px] border-x border-[#1a1a1a]/10 bg-[#f5f5f0] shadow-[inset_0_1px_0_rgba(26,26,26,0.06)]">
+        <section className="border-b border-[#1a1a1a]/10 px-5 py-14 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="hidden max-w-xs border-r border-[#1a1a1a]/10 pr-8 pt-2 lg:block">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1a1a1a]/45">Reach</p>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-[#1a1a1a]/75">
+                Editorial-grade guest posts across trusted publisher surfaces. Campaigns are assembled for authority, fit, and measurable referral traffic—not vanity placements.
               </p>
-              <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-[#444]">{SITE_CONFIG.tagline}</p>
-
-              <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#64748b]">
-                {lead ? getPostCategoryLabel(lead) : 'Featured'}
-              </p>
-              <h1 className="font-display mt-3 text-[2.35rem] font-medium leading-[1.08] tracking-[-0.035em] text-[#111] sm:text-5xl lg:text-[2.75rem]">
-                <span className="decoration-primary/35 underline decoration-2 underline-offset-[0.18em]">{headline}</span>
-              </h1>
-
-              <div className="mt-8 space-y-5 rounded-r-xl border-l-4 border-primary bg-primary/6 py-4 pl-5 pr-4 text-[0.98rem] leading-[1.75] text-[#2d2d2d]">
-                {bodyA ? <p>{bodyA}</p> : null}
-                {secondParagraph ? <p className="text-[#3d3d3d]">{secondParagraph}</p> : null}
-              </div>
-
-              {featuredSecondary ? (
-                <Link
-                  href={postHref(featuredSecondary)}
-                  className="mt-10 block max-w-lg border-t border-black/10 pt-8 transition-colors hover:bg-[#f8fafc]"
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748b]">Also this week</p>
-                  <p className="font-display mt-2 text-lg font-semibold leading-snug text-[#0f172a]">
-                    {featuredSecondary.title}
-                  </p>
-                  {featuredSecondary.summary ? (
-                    <p className="mt-3 rounded-md bg-amber-50/90 px-3 py-2 text-sm leading-relaxed text-[#422006] ring-1 ring-amber-200/80">
-                      {featuredSecondary.summary}
-                    </p>
-                  ) : null}
+              <div className="mt-8 h-px w-12 bg-[#1a1a1a]" />
+              <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Latest signal</p>
+              {lead ? (
+                <Link href={postHref(lead)} className="mt-3 block font-display text-lg font-semibold leading-snug text-[#1a1a1a] transition hover:opacity-70">
+                  {lead.title}
                 </Link>
               ) : (
-                <div className="mt-10 border-t border-black/10 pt-8">
+                <p className="mt-3 text-sm text-[#1a1a1a]/60">Placements publish here as soon as they go live.</p>
+              )}
+            </div>
+
+            <div className="text-center">
+              <span className="inline-block border border-[#1a1a1a]/20 px-3 py-1 font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]/70">
+                [ premium guest post ]
+              </span>
+              <h1 className="font-display mt-8 text-[clamp(2.1rem,5vw,3.75rem)] font-semibold uppercase leading-[1.02] tracking-[0.02em] text-[#1a1a1a]">
+                Global media distribution
+              </h1>
+              <p className="mx-auto mt-6 max-w-xl font-sans text-sm leading-relaxed text-[#1a1a1a]/72 sm:text-base">
+                {SITE_CONFIG.tagline}. {leadTeaser}
+              </p>
+
+              <div className="mt-12 flex flex-col items-center gap-6">
+                <Link
+                  href="/contact"
+                  className="flex h-36 w-36 items-center justify-center rounded-full border-2 border-[#1a1a1a] bg-[#1a1a1a] text-center font-sans text-[11px] font-semibold uppercase leading-tight tracking-[0.14em] text-[#f5f5f0] shadow-[0_20px_50px_rgba(26,26,26,0.18)] transition hover:bg-[#2a2a2a]"
+                >
+                  Start
+                  <br />
+                  campaign
+                </Link>
+                <div className="flex flex-wrap items-center justify-center gap-4">
                   <Link
-                    href={primaryTask?.route || '/articles'}
-                    className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${tone.action}`}
+                    href={primaryTask?.route || '/updates'}
+                    className="inline-flex items-center gap-2 border border-[#1a1a1a] bg-transparent px-5 py-2.5 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1a1a1a] transition hover:bg-[#1a1a1a] hover:text-[#f5f5f0]"
                   >
-                    {primaryTask?.label || 'Browse'}
+                    View placements
                     <ArrowRight className="h-4 w-4" />
                   </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1a1a1a]/70 transition hover:text-[#1a1a1a]"
+                  >
+                    Consult an expert
+                    <ArrowUpRight className="h-4 w-4" />
+                  </Link>
                 </div>
-              )}
-            </div>
-
-            {/* Center: spotlight stack — text-only cards */}
-            <div className="order-3 flex flex-col gap-5 lg:order-2">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#64748b]">Spotlight</p>
-              {spotlightPosts.length ? (
-                spotlightPosts.map((post, i) => (
-                  <Link
-                    key={post.id}
-                    href={postHref(post)}
-                    className="group rounded-xl border border-black/10 bg-[#fafafa] p-5 shadow-sm transition hover:border-primary/40 hover:shadow-md"
-                  >
-                    <span className="text-[10px] font-bold tabular-nums text-primary/80">{String(i + 1).padStart(2, '0')}</span>
-                    <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#64748b]">
-                      {getPostCategoryLabel(post)}
-                    </p>
-                    <h2 className="font-display mt-2 text-xl font-semibold leading-snug text-[#0f172a] group-hover:text-primary">
-                      {post.title}
-                    </h2>
-                    {post.summary ? (
-                      <p className="mt-3 border-l-2 border-primary/50 pl-3 text-sm leading-relaxed text-[#444]">{post.summary}</p>
-                    ) : null}
-                  </Link>
-                ))
-              ) : (
-                <p className="text-sm text-[#666]">More stories will appear here.</p>
-              )}
-            </div>
-
-          </div>
-
-          {/* Heavy grid — more dummy / real cards, content-forward */}
-          {deckPosts.length ? (
-            <div className="mt-16 border-t border-black/10 pt-14">
-              <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-[#111] sm:text-3xl">
-                <span className="bg-[linear-gradient(transparent_65%,rgba(29,78,216,0.15)_0)]">From the desk</span>
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-[#555]">
-                Longer summaries stay on the home page for scan-friendly reading. When your CMS feed is connected, these rows fill automatically from published posts.
-              </p>
-              <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {deckPosts.map((post) => (
-                  <Link
-                    key={post.id}
-                    href={postHref(post)}
-                    className="flex h-full flex-col rounded-2xl border border-black/10 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,0.06)] transition hover:border-primary/35 hover:shadow-[0_12px_40px_rgba(15,23,42,0.1)]"
-                  >
-                    <span className="w-fit rounded-full bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
-                      {getPostCategoryLabel(post)}
-                    </span>
-                    <h3 className="font-display mt-4 text-xl font-semibold leading-snug text-[#0f172a]">{post.title}</h3>
-                    {post.summary ? (
-                      <p className="mt-4 grow rounded-lg bg-slate-50 px-3 py-3 text-sm leading-[1.65] text-[#334155] ring-1 ring-slate-200/80">
-                        {post.summary}
-                      </p>
-                    ) : null}
-                  </Link>
-                ))}
               </div>
             </div>
+
+            <div className="hidden max-w-xs border-l border-[#1a1a1a]/10 pl-8 pt-2 lg:block">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1a1a1a]/45">Process</p>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-[#1a1a1a]/75">
+                Brief, publisher matching, drafting support, and go-live reporting—without turning your story into a generic press release farm.
+              </p>
+              {bodyB ? (
+                <p className="mt-6 border-t border-[#1a1a1a]/10 pt-6 font-sans text-sm leading-relaxed text-[#1a1a1a]/65">{bodyB}</p>
+              ) : null}
+            </div>
+          </div>
+
+          {headline && headline !== 'Global media distribution' ? (
+            <div className="mx-auto mt-16 max-w-3xl border-t border-[#1a1a1a]/10 pt-10 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#1a1a1a]/45">Featured headline</p>
+              <p className="font-display mt-3 text-2xl font-medium leading-snug text-[#1a1a1a] sm:text-3xl">{headline}</p>
+            </div>
           ) : null}
+        </section>
+
+        <section id="distribution" className="border-b border-[#1a1a1a]/10 bg-[#e6dacf]/40 px-5 py-14 sm:px-8 lg:px-12 lg:py-16">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+            <div className="flex flex-col justify-between border border-[#1a1a1a]/12 bg-[#f5f5f0] p-6 lg:row-span-2 lg:min-h-[280px]">
+              <div>
+                <p className="font-display text-5xl font-semibold tabular-nums text-[#1a1a1a]">120+</p>
+                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Publisher relationships</p>
+              </div>
+              <p className="mt-8 border-t border-[#1a1a1a]/10 pt-6 font-sans text-sm leading-relaxed text-[#1a1a1a]/70">
+                Vetted outlets across news, trade, and regional desks—prioritized for category fit and editorial standards.
+              </p>
+            </div>
+            <div className="border border-[#1a1a1a]/12 bg-[#f5f5f0] p-6">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Tier</p>
+              <p className="font-display mt-3 text-2xl font-semibold text-[#1a1a1a]">Authority</p>
+              <div className="my-4 h-px bg-[#1a1a1a]/12" />
+              <p className="font-sans text-sm leading-relaxed text-[#1a1a1a]/70">High-trust domains with strong topical relevance for competitive categories.</p>
+            </div>
+            <div className="border border-[#1a1a1a]/12 bg-[#f5f5f0] p-6 lg:col-span-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Latest distributions</p>
+              <p className="font-display mt-3 text-xl font-semibold text-[#1a1a1a]">Campaign desk</p>
+              <div className="my-4 h-px bg-[#1a1a1a]/12" />
+              <p className="font-sans text-sm leading-relaxed text-[#1a1a1a]/70">
+                Live placements and syndication notes surface on the updates index. Use it as a transparent record of what shipped, where, and when.
+              </p>
+              <Link href="/updates" className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1a1a1a]">
+                Open archive
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="border border-[#1a1a1a]/12 bg-[#f5f5f0] p-6">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Tier</p>
+              <p className="font-display mt-3 text-2xl font-semibold text-[#1a1a1a]">Scale</p>
+              <div className="my-4 h-px bg-[#1a1a1a]/12" />
+              <p className="font-sans text-sm leading-relaxed text-[#1a1a1a]/70">Multi-outlet bursts for launches, funding news, and category education.</p>
+            </div>
+            <div className="flex flex-col justify-between border border-[#1a1a1a]/12 bg-[#1a1a1a] p-6 text-[#f5f5f0] lg:col-span-2">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f5f5f0]/55">Consult</p>
+                <p className="font-display mt-3 text-2xl font-semibold">Talk to distribution</p>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 border border-[#f5f5f0] bg-[#f5f5f0] px-4 py-2.5 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition hover:bg-transparent hover:text-[#f5f5f0]"
+                >
+                  Book a call
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link href="/help" className="inline-flex items-center border border-[#f5f5f0]/30 px-4 py-2.5 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-[#f5f5f0]/90 transition hover:border-[#f5f5f0]">
+                  Help center
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+          <div className="flex flex-col gap-4 border-b border-[#1a1a1a]/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="font-display text-3xl font-semibold uppercase tracking-[0.02em] text-[#1a1a1a] sm:text-4xl">Our distribution network</h2>
+              <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-[#1a1a1a]/65">
+                Editorial spotlights and desk notes—text only, built for scanning. Connect your feed and this grid fills from published guest posts automatically.
+              </p>
+            </div>
+            <Link href="/updates" className="shrink-0 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1a1a1a]/60 transition hover:text-[#1a1a1a]">
+              View all →
+            </Link>
+          </div>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-12">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">Spotlight</p>
+              <div className="mt-5 flex flex-col gap-4">
+                {spotlightPosts.length ? (
+                  spotlightPosts.map((post, i) => (
+                    <Link
+                      key={post.id}
+                      href={postHref(post)}
+                      className="group border border-[#1a1a1a]/10 bg-[#f5f5f0] p-5 transition hover:border-[#1a1a1a]/25"
+                    >
+                      <span className="font-sans text-[10px] font-semibold tabular-nums text-[#1a1a1a]/40">{String(i + 1).padStart(2, '0')}</span>
+                      <p className="mt-1 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a1a1a]/45">{getPostCategoryLabel(post)}</p>
+                      <h3 className="font-display mt-2 text-xl font-semibold leading-snug text-[#1a1a1a] group-hover:opacity-75">{post.title}</h3>
+                      {post.summary ? <p className="mt-3 border-l-2 border-[#1a1a1a]/20 pl-3 font-sans text-sm leading-relaxed text-[#1a1a1a]/70">{post.summary}</p> : null}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="font-sans text-sm text-[#1a1a1a]/55">More placements will appear here.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="border-t border-[#1a1a1a]/10 pt-10 lg:border-t-0 lg:border-l lg:pl-12 lg:pt-0">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a1a1a]/45">From the desk</p>
+              {deckPosts.length ? (
+                <div className="mt-5 space-y-4">
+                  {deckPosts.map((post) => (
+                    <Link key={post.id} href={postHref(post)} className="block border-b border-[#1a1a1a]/10 py-4 first:pt-0 transition hover:opacity-75">
+                      <span className="inline-block border border-[#1a1a1a]/15 px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-[#1a1a1a]/55">
+                        {getPostCategoryLabel(post)}
+                      </span>
+                      <p className="font-display mt-2 text-lg font-semibold leading-snug text-[#1a1a1a]">{post.title}</p>
+                      {post.summary ? <p className="mt-2 font-sans text-sm leading-relaxed text-[#1a1a1a]/65">{post.summary}</p> : null}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4 font-sans text-sm text-[#1a1a1a]/55">Desk notes will list here when additional posts are available.</p>
+              )}
+            </div>
+          </div>
 
           {supportTasks.length ? (
-            <div className="mt-16 grid gap-4 border-t border-black/10 pt-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-16 grid gap-4 border-t border-[#1a1a1a]/10 pt-12 sm:grid-cols-2 lg:grid-cols-3">
               {supportTasks.slice(0, 3).map((task) => (
-                <Link
-                  key={task.key}
-                  href={task.route}
-                  className="rounded-xl border border-black/10 bg-[#fafafa] px-5 py-4 transition hover:bg-[#f3f3f3]"
-                >
-                  <h3 className="font-display text-lg font-medium text-[#111]">{task.label}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#555]">{task.description}</p>
+                <Link key={task.key} href={task.route} className="border border-[#1a1a1a]/10 bg-[#e6dacf]/30 px-5 py-5 transition hover:bg-[#e6dacf]/50">
+                  <h3 className="font-display text-lg font-semibold text-[#1a1a1a]">{task.label}</h3>
+                  <p className="mt-2 font-sans text-sm leading-relaxed text-[#1a1a1a]/65">{task.description}</p>
                 </Link>
               ))}
             </div>
@@ -458,10 +518,10 @@ function EditorialHome({
         </section>
 
         <div
-          className="h-4 w-full"
+          className="h-3 w-full"
           style={{
             background:
-              'repeating-linear-gradient(90deg, #0a0a0a 0px, #0a0a0a 3px, #fff 3px, #fff 5px, #0a0a0a 5px, #0a0a0a 8px, #fafafa 8px, #fafafa 11px)',
+              'repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 2px, #f5f5f0 2px, #f5f5f0 4px, #1a1a1a 4px, #1a1a1a 6px, #e6dacf 6px, #e6dacf 8px)',
           }}
           aria-hidden
         />
