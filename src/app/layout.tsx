@@ -23,6 +23,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {googleFontsHref ? <link rel="stylesheet" href={googleFontsHref} /> : null}
+        <link rel="icon" href="/favicon.ico?v=20260423" sizes="any" />
+        <link rel="icon" href="/favicon.png?v=20260423" type="image/png" />
       </head>
       <body
         data-site-shell={recipe.homeLayout}
