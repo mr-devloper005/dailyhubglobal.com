@@ -26,11 +26,11 @@ export type SiteFontConfig = {
  * Change only these values to update typography site-wide.
  */
 export const SITE_FONT_CONFIG: SiteFontConfig = {
-  sansFamily: 'Manrope',
-  displayFamily: 'Fraunces',
+  sansFamily: 'Montserrat',
+  displayFamily: 'Playfair Display',
   monoFamily: 'JetBrains Mono',
-  sansWeights: [400, 500, 600, 700, 800],
-  displayWeights: [400, 500, 600, 700],
+  sansWeights: [400, 500, 600, 700],
+  displayWeights: [500, 600, 700, 800, 900],
   monoWeights: [400, 500, 700],
 }
 

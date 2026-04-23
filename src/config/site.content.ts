@@ -2,16 +2,16 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent news desk',
+    tagline: 'Guest post & media distribution',
   },
   footer: {
-    tagline: 'Simple publishing for press-style updates',
+    tagline: 'Publisher-grade guest posts and syndication',
   },
   hero: {
-    badge: 'Latest updates',
-    title: ['Clear publishing, simple reading, no extra noise.'],
+    badge: 'Distribution desk',
+    title: ['Place stories where they earn authority—not noise.', 'Guest posts that read like editorial, not spam.'],
     description:
-      'A minimal article-style publishing template built for regular updates, announcements, and media distribution posts.',
+      'Campaign-led guest posting and media distribution across vetted publishers, with clear reporting and editorial guardrails.',
     primaryCta: {
       label: 'Browse latest posts',
       href: '/updates',
@@ -37,7 +37,7 @@ export const siteContent = {
         'A simple publishing template for updates, announcements, and readable article pages.',
       keywords: ['newsroom posts', 'latest updates', 'announcements', 'press articles'],
     },
-    introBadge: 'About',
+    introBadge: 'Overview',
     introTitle: 'A quiet publishing template made for regular updates.',
     introParagraphs: [
       'This template is designed for sites that publish straightforward updates and want the homepage to behave like a clean front page rather than a product landing page.',

@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/use-toast'
 import { useAuth } from '@/lib/auth-context'
@@ -107,16 +107,14 @@ export function NavbarAuthControls() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="rounded-full text-[#5f4750] hover:bg-[rgba(110,26,55,0.06)] hover:text-[#8f1f3f]">
             <Avatar className="h-9 w-9 border border-[rgba(110,26,55,0.12)]">
-              <AvatarImage src={user?.avatar} alt={user?.name} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 border-[rgba(110,26,55,0.12)] bg-[rgba(255,250,244,0.98)]">
           <div className="flex items-center gap-3 p-3">
             <Avatar className="h-10 w-10 border border-[rgba(110,26,55,0.12)]">
-              <AvatarImage src={user?.avatar} alt={user?.name} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="text-sm font-medium">{user?.name}</span>
